@@ -1,0 +1,15 @@
+// recursive
+//参数中newHead每次都会变，初始为null，所以要重新声明class，传入两个变量
+public class Solution{
+    public ListNode reverseList(ListNode head){
+        return reverseHelper(head, null);
+    }
+    public ListNode reverseHelper(ListNode head, ListNode newHead){
+        if (head == null){
+            return newHead;
+        }
+        ListNode temp = head.next;
+        head.next = newHead;
+        return reverseHelper(temp, head);
+    }
+}

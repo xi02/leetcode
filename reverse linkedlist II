@@ -1,0 +1,46 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        //dummy储存当前head
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        head = dummy;
+        // find mNode； 
+        for (int i = 1; i < m; i++){
+            if (head == null){
+                return null;
+            }
+        head = head.next;
+        }
+        // 要保存下头与尾，也就是premNode和mNode,容易连接最后一步
+        // premNode: 头
+        ListNode premNode = head;
+        // mNode:反转后的尾
+        ListNode mNode = head.next;
+        // nNode: 反转后的头
+        ListNode nNode = mNode;
+        // postnNode: 尾
+        ListNode postnNode = mNode.next;
+        // 需要把mNode的next连接到premNode后面
+        for (int i = m; i < n; i++){
+            if (postnNode == null){
+                return null;
+            }
+            //需要保存下postnNode.next,把postnNode放到最前
+            ListNode newHead = postnNode.next;
+            postnNode.next = nNode;
+            nNode = postnNode;
+            postnNode = newHead;
+        }
+        mNode.next = postnNode;
+        premNode.next = nNode;
+        return dummy.next;
+    }
+}

@@ -1,0 +1,87 @@
+/**
+ * Definition for undirected graph.
+ * class UndirectedGraphNode {
+ *     int label;
+ *     List<UndirectedGraphNode> neighbors;
+ *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+ * };
+ */
+public class Solution {
+    public HashMap<Integer, UndirectedGraphNode> map = new HashMap();
+
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if(node == null){
+            return null;
+        }
+    //     // use BFS to traverse the graph and get all nodes
+    //     ArrayList<UndirectedGraphNode> nodes = getNodes(node);
+        
+    //     // copy nodes, store the old-> new mapping information in a hash map
+    //     HashMap<UndirectedGraphNode, UndirectedGraphNode> mapping = new HashMap<>();
+    //     for (UndirectedGraphNode n : nodes){
+    //         mapping.put(n, new UndirectedGraphNode(n.label));
+    //     }
+        
+    //     // copy neighbors(edges)
+    //     for (UndirectedGraphNode n : nodes){
+    //         UndirectedGraphNode newNode = mapping.get(n);
+    //         for (UndirectedGraphNode neighbor : n.neighbors){
+    //             UndirectedGraphNode newNeighbor = mapping.get(neighbor);
+    //             newNode.neighbors.add(newNeighbor);
+    //         }
+    //     }
+    //     return mapping.get(node);
+    // }
+    // // use BFS to traverse the graph and get all nodes
+    // private ArrayList<UndirectedGraphNode> getNodes(UndirectedGraphNode node){
+    //     Queue<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
+    //     HashSet<UndirectedGraphNode> set = new HashSet<>();
+    //     queue.offer(node);
+    //     set.add(node);
+    //     while (!queue.isEmpty()){
+    //         UndirectedGraphNode head = queue.poll();
+    //         for (UndirectedGraphNode neighbor: head.neighbors){
+    //             if (!set.contains(neighbor)){
+    //                 set.add(neighbor);
+    //                 queue.offer(neighbor);
+    //             }
+    //         }
+    //     }
+    //     // hashset to arraylist
+    //     return new ArrayList<UndirectedGraphNode>(set);
+    // }
+    
+    
+    
+    // UndirectedGraphNode newNode = new UndirectedGraphNode(node.label); // new node for return
+    // HashMap<Integer, UndirectedGraphNode> map =new HashMap(); // store visited nodes
+    // map.put(newNode.label, newNode); //add first node to HashMap
+    
+    // LinkedList<UndirectedGraphNode> queue = new LinkedList(); // to store original nodes need to be visited
+    // queue.add(node); // add the first node
+    
+    // while (!queue.isEmpty()){ //if more nodes need to be visited
+    //     UndirectedGraphNode n = queue.pop();
+    //     for (UndirectedGraphNode neighbor : n.neighbors){
+    //         if (!map.containsKey(neighbor.label)){ // add to map and queue if this node hasn't been searched before
+    //             map.put(neighbor.label, new UndirectedGraphNode(neighbor.label));
+    //             queue.add(neighbor);
+    //         }
+    //         map.get(n.label).neighbors.add(map.get(neighbor.label)); //add neighbor to new created nodes
+    //     }
+    // }
+    // return newNode;
+    // }
+    
+    if (map.containsKey(node.label)){
+        return map.get(node.label);
+    }
+    UndirectedGraphNode cloned = new UndirectedGraphNode(node.label);
+    map.put(cloned.label, cloned);
+    for (UndirectedGraphNode neighbor: node.neighbors){
+        cloned.neighbors.add(cloneGraph(neighbor));
+    }
+    return cloned;
+    }
+    
+}

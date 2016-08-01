@@ -1,0 +1,27 @@
+public class Solution {
+    public int reverse(int x){
+        // 注意符号
+        // 注意整数越界
+        // Integer.MIN_VALUE的绝对值是比Integer.MAX_VALUE大1的
+        // long r = 0;
+        // while(x != 0){
+        //     r = r*10 + x%10;
+        //     x /= 10;
+        // }
+        // if(r >= Integer.MIN_VALUE && r <= Integer.MAX_VALUE)
+        //     return (int)r;
+        // else
+        //     return 0;
+        
+        if (x == Integer.MIN_VALUE) return 0;
+        int num = Math.abs(x);
+        int res = 0;
+        while (num != 0){
+            if (res > (Integer.MAX_VALUE - num % 10) / 10)
+            return 0;
+            res = res * 10 + num % 10;
+            num /= 10;
+        }
+        return x > 0 ? res : -res;
+    }
+}

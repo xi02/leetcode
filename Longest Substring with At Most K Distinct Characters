@@ -1,0 +1,32 @@
+public class Solution {
+    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+        if (s.length() == 0){
+            return 0;
+        }
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        // Initialize
+        for (char c : s.toCharArray()){
+            map.put(c, 0);
+        }
+        int start = 0, end = 0, counter = 0, maxLen = Integer.MIN_VALUE;
+        while (end < s.length()){
+            char c1 = s.charAt(end);
+            if (map.get(c1) == 0){
+                counter ++;
+            }
+            map.put(c1, map.get(c1) + 1);
+            end ++;
+            // // invalid ----> validranhrwo
+            while (counter > k){
+            char c2 = s.charAt(start);
+            map.put(c2, map.get(c2) - 1);
+            if (map.get(c2) == 0){
+                counter --;
+            }
+            start ++;
+            }
+          maxLen = Math.max(maxLen, end - start);
+        }
+        return maxLen;
+    }
+}

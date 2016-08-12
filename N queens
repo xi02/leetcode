@@ -1,0 +1,59 @@
+public class Solution {
+    // check if the column, 45 diagonal and 135 diagonal has a queen
+    // n column
+    // 2n - 1: 45 diagonal
+    // 2n - 1: 135 diagonal 
+    
+    
+    // flag[0] to flag[n - 1] : if the column had a queen before
+    // flag[n] to flag[3n - 2] : if the 45 diagonal had a queen before
+    // flag[3n - 1] to flag[5n - 3] : if the 135 diagonal had a queen before
+    // when reach [row, col], check [col] && [n + row + col] && [n + 2n - 1 + n - 1 + col - row];
+    // public List<List<String>> solveNQueens(int n) {
+    //     List<List<String>> res = new ArrayList<List<String>>();
+    //     String[] queens = new String[n];
+    //     char[] initial = new char[n];
+    //     Arrays.fill(initial, '.');
+    //     Arrays.fill(queens, String.valueOf(Arrays.copyOf(initial, n)));
+    //     int[] flag = new int[5*n - 2];
+    // }
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> res=new ArrayList<List<String>>();
+        String[] queens=new String[n];
+        char[] initial=new char[n];
+        Arrays.fill(initial,'.');
+        Arrays.fill(queens,String.valueOf(Arrays.copyOf(initial,n)));
+        int[] flag=new int[5*n-2];
+        Arrays.fill(flag,1);
+        helper(res,queens,flag,0,n);
+        return res;
+    }
+    private void helper(List<List<String>> res,String[] queens,int[] flag,int row,int n){
+        if(row==n){
+            res.add(new ArrayList<String>(Arrays.asList(queens)));
+            return;
+        }
+        for(int col=0;col!=n;col++){
+            if(flag[col]==1 && flag[n+col+row]==1 && flag[4*n-2+col-row]==1){
+                // 1表示可以加queen， 0 表示会有attack
+                flag[col]=0;
+                flag[n+col+row]=0;
+                flag[4*n-2+col-row]=0;
+                char[] chars = queens[row].toCharArray();
+
+                chars[col]='Q';
+                queens[row]=String.valueOf(chars);
+                
+                helper(res,queens,flag,row+1,n);
+                // 还原
+                chars=queens[row].toCharArray();
+                chars[col]='.';
+                queens[row]=String.valueOf(chars);
+        
+                flag[col]=1;
+                flag[n+col+row]=1;
+                flag[4*n-2+col-row]=1;
+            }
+        }
+    }
+}
